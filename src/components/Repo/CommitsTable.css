@@ -1,0 +1,5 @@
+.commitCollapse {
+    min-height: 150px; 
+    max-width: 500px;
+    background-color: rgb(190, 190, 190);
+}
