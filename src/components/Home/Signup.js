@@ -16,20 +16,26 @@ export default function Signup(props) {
     );
   }
 
+  const post = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: {}
+};
+
   function apiSignup(url) {
-    fetch(url)
-    .then(response => response.json())
-    .then(json => handleResponseJson(json))
+    fetch(url, post)
+    .then(response => handleResponse(response))
     .catch(function() {alert('error!');});
   }
 
-  function handleResponseJson(jsonData){
-    if(jsonData){
-        props.userHasAuthenticated(true);
-        props.history.push("/");
+  function handleResponse(response){
+    if(response.ok){
+      props.userHasAuthenticated(true);
+      props.setCurrUserName(userName);
+      props.history.push("/");
     }
     else
-      alert('User already exists'); 
+      alert('User already Exists'); 
   }
 
   async function handleSubmit(event) {

@@ -11,13 +11,12 @@ export default function Login(props) {
   
   function fetchData(url) {
     fetch(url)
-    .then(response => response.json())
-    .then(json => handleResponseJson(json))
+    .then(response => handleResponse(response))
     .catch(function() {alert('error !');});
   }
 
-  function handleResponseJson(jsonData){
-    if(jsonData){
+  function handleResponse(response){
+    if(response.ok){
       props.userHasAuthenticated(true);
       props.setCurrUserName(userName);
       props.history.push("/");

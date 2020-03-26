@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PageHeader } from "react-bootstrap";
 import BranchesTable from "../components/Repo/BranchesTable";
 import CommitsTable from "../components/Repo/CommitsTable";
-
+import WorkingCopy from "../components/Repo/WorkingCopy";
 
 import "./Repo.css";
 
@@ -29,7 +29,7 @@ export default function Repo(props) {
         setbranches(jsonData[3]);
       }
 
-      getRepos(`http://localhost:8080/mygit/api/user/repos/${username}/${reponame}`);
+      getRepos(`http://localhost:8080/mygit/api/user/repository/${username}/${reponame}`);
     }
     onLoad();
   },[reponame, username]);
@@ -38,6 +38,7 @@ export default function Repo(props) {
 return(
   <div className="repo">
     <PageHeader>{repoData.name}</PageHeader>
+    {WorkingCopy(props)}
     {BranchesTable(branches)}
     {CommitsTable(props, commits)}
   </div>);

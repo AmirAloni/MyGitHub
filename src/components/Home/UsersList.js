@@ -12,15 +12,16 @@ export default function UsersList(props) {
       if (!props.isAuthenticated) {
         return;
       }
+  
       function getUsers(url) {
         fetch(url)
         .then(response => response.json())
-        .then(json => handleResponseJson(json))
+        .then(json => handleResponse(json))
         .catch(function() {alert('error!');});
       }
     
-      function handleResponseJson(jsonData){
-        setUsers(jsonData);        
+      function handleResponse(json){  
+          setUsers(json)
       }
       
       getUsers(`http://localhost:8080/mygit/api/user/users/${props.currUserName}`);

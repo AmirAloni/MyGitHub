@@ -1,4 +1,5 @@
-.commitCollapse {
+
+.contentDiv {
     min-height: 150px; 
     background-color: rgb(255, 255, 255);
     border-width: thin;
@@ -7,8 +8,8 @@
     border-radius: 5px;
 }
 
-.commit-collapse-header{
+.work-header{
     font-size: medium;
     font-weight: bold;
-    ;
 }
+

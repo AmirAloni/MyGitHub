@@ -20,7 +20,7 @@ export default function OthersReposList(username ,otherUserName) {
         setRepos(jsonData);        
       }
       
-      getRepos(`http://localhost:8080/mygit/api/user/users/${username}/${otherUserName}`);
+      getRepos(`http://localhost:8080/mygit/api/user/repositories/${username}`);
     }
     onLoad();
   }, [otherUserName, username]);

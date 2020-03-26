@@ -5,6 +5,7 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import Routes from "./Routes";
 import "./App.css";
 
+
 function App(props) {
   const [currUserName, setCurrUserName] = useState("");
   const [isAuthenticated, userHasAuthenticated] = useState(false);

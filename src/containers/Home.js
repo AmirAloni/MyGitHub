@@ -1,6 +1,8 @@
 import React from "react";
+import { Row, Col } from "react-bootstrap";
 import ReposList from "../components/Home/ReposList";
 import UsersList from "../components/Home/UsersList";
+import NotificationsList from "../components/Home/NotificationsList";
 
 import "./Home.css";
 
@@ -18,8 +20,13 @@ export default function Home(props) {
   function renderHomePage() {
     return (
       <div className="homePage">
-          {ReposList(props)}
-          {UsersList(props)}
+          <Row>
+            <Col>{ReposList(props)}</Col>
+          </Row>
+          <Row>
+            <Col xs={4}>{UsersList(props)}</Col>
+            <Col xs={8}>{NotificationsList(props)}</Col>
+          </Row>         
       </div>
     );
   }

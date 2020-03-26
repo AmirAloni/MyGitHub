@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Table, Collapse, Row,Col } from "react-bootstrap";
 import {Treebeard} from 'react-treebeard';
 
@@ -13,21 +13,12 @@ export default function CommitsTable(props, commits) {
     const [cursor, setCursor] = useState(false);
 
     const fileContentCollapse = document.getElementById('commit-collapse-text');
-
+    const fileContentHeaderCollapse = document.getElementById('commit-collapse-header');
 
 function onCommitClicked(sha1){
-    fetchCommitData(`http://localhost:8080/mygit/api/user/repos/repo/${username}/${reponame}/${sha1}`);
+    fetchCommitData(`http://localhost:8080/mygit/api/user/repository/${username}/${reponame}/${sha1}`);
 }
 
-function closeCommitDetails(){
-    fetch(`http://localhost:8080/mygit/api/user/repos/repo/${username}/${reponame}`,{
-        method: 'DELETE',
-        headers: {
-         'Content-type': 'application/json; charset=UTF-8'
-        }
-    })
-    .catch(function() {alert('error!');});
-}
 
 function fetchCommitData(url) {
     fetch(url)
@@ -58,7 +49,7 @@ function fetchCommitData(url) {
            {commits.map((commit,i) =>     
             <tr onClick={function(){
                 if(commitOpen){
-                    closeCommitDetails();
+                  setTreeData("");
                 }
                 else{
                     onCommitClicked(commit.sha1);
@@ -81,20 +72,27 @@ function fetchCommitData(url) {
 
 function renderCommitDetails(){
     return(
-      <div> 
+      <div>
+        <Collapse in={commitOpen} >
         <Row>
           <Col sm={4}>
             <Collapse in={commitOpen} >
-            <div>{renderFilesTree()}</div>
+            <div>
+              <h4>Commit Details</h4> 
+              {renderFilesTree()}
+            </div>
            </Collapse>
           </Col>
           <Col sm={8}>      
             <Collapse in={commitOpen} className="commitCollapse">
-            <div id="commit-collapse-text"></div>
+            <div>
+               <div className="commit-collapse-header" id="commit-collapse-header"></div>
+               <div id="commit-collapse-text"></div>
+            </div>
            </Collapse>
         </Col>
         </Row>
-        
+        </Collapse>
   </div>
     );
 }
@@ -113,10 +111,10 @@ function renderFilesTree(){
         setCursor(node);
         setTreeData(Object.assign({}, treeData))
 
-        if(!node.children){
-           
+        if(!node.children){     
+          fileContentHeaderCollapse.textContent = node.name;   
             fetch('http://localhost:8080/mygit/api/file',{
-                method: 'POST', 
+                method: 'Post', 
                 mode: 'no-cors',
                 cache: 'no-cache',
                 credentials: 'same-origin',
