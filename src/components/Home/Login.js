@@ -29,9 +29,14 @@ export default function Login(props) {
     return userName.length > 0 && password.length > 0;
   }
 
+  function sha1Password(password){
+    var sha1 = require('sha1');
+    return sha1(password);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
-    fetchData(`http://localhost:8080/mygit/api/login/${userName}`);
+    fetchData(`http://localhost:8080/mygit/api/login/${userName}/${sha1Password(password)}`);
     }
 
   return (

@@ -6,21 +6,31 @@ export default function Signup(props) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");  
   const [confirmPassword, setConfirmPassword] = useState("");  
+  const [email, setEmail] = useState("");  
 
 
   function validateForm() {
     return (
       userName.length > 0 &&
       password.length > 0 &&
-      password === confirmPassword
+      password === confirmPassword &&
+      email.length > 0
     );
   }
 
   const post = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: {}
+    body: JSON.stringify({ name: userName,
+                           password: sha1Password(password),
+                           email: email
+                          })
 };
+
+function sha1Password(password){
+  var sha1 = require('sha1');
+  return sha1(password);
+}
 
   function apiSignup(url) {
     fetch(url, post)
@@ -40,7 +50,7 @@ export default function Signup(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    apiSignup(`http://localhost:8080/mygit/api/signup/${userName}`);
+    apiSignup(`http://localhost:8080/mygit/api/signup`);
     }
 
 
@@ -70,6 +80,14 @@ export default function Signup(props) {
             type="password"
             onChange={e => setConfirmPassword(e.target.value)}
             value={confirmPassword}
+          />
+        </FormGroup>
+        <FormGroup controlId="email" bsSize="large">
+          <ControlLabel>Email</ControlLabel>
+          <FormControl
+            type="email"
+            onChange={e => setEmail(e.target.value)}
+            value={email}
           />
         </FormGroup>
         <Button block bsSize="large" disabled={!validateForm()} type="submit">
